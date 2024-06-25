@@ -1,28 +1,47 @@
 {% extends "base.html" %}
 {% block title %}{{ product.name }}{% endblock %}
 {% block content %}
-  <h1>{{ product.name }}</h1>
-  <img src="{{ product.image_url }}" alt="{{ product.name }}">
-  <p>{{ product.description }}</p>
-  <p>Prix : {{ product.price }} €</p>
-  <p>Stock : {{ product.stock }}</p>
-
-  <h2>Reviews</h2>
-  {% for review in reviews %}
-    <div class="review">
-      <p>{{ review.body }}</p>
-      <small>By {{ review.author.username }} on {{ review.timestamp.strftime('%Y-%m-%d') }}</small>
+  <div class="row">
+    <div class="col-md-8">
+      <div class="card mb-4 shadow-sm">
+        <img src="{{ product.image_url }}" class="card-img-top" alt="{{ product.name }}">
+        <div class="card-body">
+          <h5 class="card-title">{{ product.name }}</h5>
+          <p class="card-text">{{ product.description }}</p>
+          <p class="card-text"><strong>Prix :</strong> {{ product.price }} €</p>
+          <p class="card-text"><strong>Stock :</strong> {{ product.stock }}</p>
+        </div>
+      </div>
     </div>
-  {% endfor %}
-
-  {% if current_user.is_authenticated %}
-    <h3>Add a review</h3>
-    <form method="POST" action="{{ url_for('add_review', product_id=product.id) }}">
-      {{ form.hidden_tag() }}
-      <p>{{ form.body.label }}<br>{{ form.body() }}</p>
-      <p>{{ form.submit() }}</p>
-    </form>
-  {% else %}
-    <p>You need to <a href="{{ url_for('auth.login') }}">login</a> to add a review.</p>
-  {% endif %}
+    <div class="col-md-4">
+      <div class="card mb-4 shadow-sm">
+        <div class="card-header">
+          Avis
+        </div>
+        <div class="card-body">
+          {% for review in reviews %}
+            <div class="media mb-3">
+              <div class="media-body">
+                <p>{{ review.body }}</p>
+                <small class="text-muted">Par {{ review.author.username }} le {{ review.timestamp.strftime('%Y-%m-%d') }}</small>
+              </div>
+            </div>
+          {% endfor %}
+          {% if current_user.is_authenticated %}
+            <h5 class="mt-4">Ajouter un avis</h5>
+            <form method="POST" action="{{ url_for('add_review', product_id=product.id) }}">
+              {{ form.hidden_tag() }}
+              <div class="form-group">
+                {{ form.body.label(class="form-label") }}
+                {{ form.body(class="form-control") }}
+              </div>
+              <button type="submit" class="btn btn-primary">Soumettre</button>
+            </form>
+          {% else %}
+            <p>Vous devez <a href="{{ url_for('auth.login') }}">vous connecter</a> pour ajouter un avis.</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}
