@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard{% endblock %}
+{% block content %}
+  <h1>Tableau de bord administrateur</h1>
+  <div class="row">
+    <div class="col-md-3">
+      <div class="list-group">
+        <a href="{{ url_for('admin_products') }}" class="list-group-item list-group-item-action">Produits</a>
+        <a href="{{ url_for('admin_messages') }}" class="list-group-item list-group-item-action">Messages</a>
+        <a href="{{ url_for('admin_orders') }}" class="list-group-item list-group-item-action">Commandes</a>
+      </div>
+    </div>
+    <div class="col-md-9">
+      <h2>Bienvenue dans l'espace administrateur</h2>
+      <p>Utilisez les liens à gauche pour gérer le contenu du site.</p>
+    </div>
+  </div>
+{% endblock %}
