@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Admin Products{% endblock %}
+{% block content %}
+  <h1>Gestion des produits</h1>
+  <a href="{{ url_for('admin_add_product') }}" class="btn btn-primary mb-3">Ajouter un produit</a>
+  <div class="row">
+    {% for product in products %}
+      <div class="col-md-4">
+        <div class="card mb-4 shadow-sm">
+          <img src="{{ product.image_url }}" class="card-img-top" alt="{{ product.name }}">
+          <div class="card-body">
+            <h5 class="card-title">{{ product.name }}</h5>
+            <p class="card-text">{{ product.description[:100] }}...</p>
+            <p class="card-text"><strong>Prix :</strong> {{ product.price }} €</p>
+            <p class="card-text"><strong>Stock :</strong> {{ product.stock }}</p>
+            <a href="{{ url_for('admin_edit_product', product_id=product.id) }}" class="btn btn-secondary">Modifier</a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}
