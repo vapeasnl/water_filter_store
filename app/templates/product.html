@@ -29,7 +29,7 @@
           {% endfor %}
           {% if current_user.is_authenticated %}
             <h5 class="mt-4">Ajouter un avis</h5>
-            <form method="POST" action="{{ url_for('add_review', product_id=product.id) }}">
+            <form method="POST" action="{{ url_for('product', product_id=product.id) }}">
               {{ form.hidden_tag() }}
               <div class="form-group">
                 {{ form.body.label(class="form-label") }}
